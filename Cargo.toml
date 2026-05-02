@@ -1,0 +1,10 @@
+[package]
+name = "test-network"
+version = "0.1.0"
+edition = "2021"
+description = "WASM plugin testing network capability for fledge"
+
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true

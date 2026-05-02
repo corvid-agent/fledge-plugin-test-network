@@ -1,0 +1,22 @@
+[plugin]
+name = "test-network"
+version = "0.1.0"
+description = "Tests the network capability — verifies WASM plugins can make outbound connections"
+author = "CorvidLabs"
+protocol = "fledge-v1"
+runtime = "wasm"
+
+[[commands]]
+name = "test-network"
+description = "Run network capability tests"
+binary = "target/wasm32-wasip1/release/test-network.wasm"
+
+[hooks]
+build = "cargo build --target wasm32-wasip1 --release"
+
+[capabilities]
+exec = false
+store = false
+metadata = false
+filesystem = "none"
+network = true
