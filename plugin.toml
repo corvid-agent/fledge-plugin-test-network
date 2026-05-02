@@ -1,6 +1,6 @@
 [plugin]
 name = "test-network"
-version = "0.1.0"
+version = "0.2.0"
 description = "Tests the network capability — verifies WASM plugins can make outbound connections"
 author = "CorvidLabs"
 protocol = "fledge-v1"
