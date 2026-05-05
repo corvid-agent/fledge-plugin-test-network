@@ -37,7 +37,10 @@ fn json_escape(s: &str) -> String {
 }
 
 fn output(text: &str) {
-    fledge_send(&format!(r#"{{"type":"output","text":"{}"}}"#, json_escape(text)));
+    fledge_send(&format!(
+        r#"{{"type":"output","text":"{}"}}"#,
+        json_escape(text)
+    ));
 }
 
 fn pass(msg: &str) {
@@ -73,7 +76,9 @@ fn test_tcp_dns() {
         Ok(_stream) => pass("TCP to 8.8.8.8:53 (Google DNS) — connected"),
         Err(e) => {
             if is_unsupported(&e) {
-                info(&format!("TCP to 8.8.8.8:53 unsupported — WASI P1 lacks socket API: {e}"));
+                info(&format!(
+                    "TCP to 8.8.8.8:53 unsupported — WASI P1 lacks socket API: {e}"
+                ));
             } else {
                 pass(&format!("TCP socket API available (connect error: {e})"));
             }
@@ -86,7 +91,9 @@ fn test_tcp_cloudflare() {
         Ok(_stream) => pass("TCP to 1.1.1.1:443 (Cloudflare) — connected"),
         Err(e) => {
             if is_unsupported(&e) {
-                info(&format!("TCP to 1.1.1.1:443 unsupported — WASI P1 limitation: {e}"));
+                info(&format!(
+                    "TCP to 1.1.1.1:443 unsupported — WASI P1 limitation: {e}"
+                ));
             } else {
                 pass(&format!("TCP socket API available (error: {e})"));
             }
@@ -121,7 +128,9 @@ fn test_tcp_http() {
         }
         Err(e) => {
             if is_unsupported(&e) {
-                info(&format!("HTTP via TCP unsupported — WASI P1 limitation: {e}"));
+                info(&format!(
+                    "HTTP via TCP unsupported — WASI P1 limitation: {e}"
+                ));
             } else {
                 output(&format!("  TCP connect to example.com:80 failed: {e}\n"));
                 output("  (This may be expected in network-restricted environments)\n");
@@ -156,7 +165,10 @@ fn test_negative_no_filesystem() {
 }
 
 fn test_negative_no_process_spawn() {
-    match std::process::Command::new("curl").arg("http://example.com").output() {
+    match std::process::Command::new("curl")
+        .arg("http://example.com")
+        .output()
+    {
         Ok(_) => fail("process spawn succeeded"),
         Err(_) => pass("process spawn blocked (WASI p1)"),
     }
@@ -181,7 +193,10 @@ fn main() {
     header("SUMMARY");
     output(&format!("  {} tests: {} passed, {} failed\n", total, p, f));
     if i > 0 {
-        output(&format!("  {} network tests returned 'unsupported' (WASI P1 limitation)\n", i));
+        output(&format!(
+            "  {} network tests returned 'unsupported' (WASI P1 limitation)\n",
+            i
+        ));
     }
     output("\n");
 
